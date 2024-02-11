@@ -23,14 +23,14 @@ function createGrid(size = 16) { // create a new square grid
             newDiv.style.flexBasis = (1 / size * 100) + "%"; // calculate flex base percentage
             newDiv.classList.add("square"); // add rest of styling 
 
-            newDiv.addEventListener("mouseenter", (e) => {
-                activateSquare(e.target);
-                e.target.style.backgroundColor = randomRgb();
+            newDiv.addEventListener("mouseover", (e) => {
+                // activateSquare(e.target);
+                e.target.style.backgroundColor = randomRgba(e.target);
             }, false);
-            newDiv.addEventListener("mouseleave", (e) => {
-                activateSquare(e.target);
-                e.target.style.backgroundColor = `black`;
-            }, false);
+            // newDiv.addEventListener("mouseleave", (e) => {
+            //     activateSquare(e.target);
+            //     e.target.style.backgroundColor = `black`;
+            // }, false);
 
             document.querySelector("#squareContainer").appendChild(newDiv);
         }
@@ -47,11 +47,20 @@ function activateSquare(square) { // toggle between adding and removing the "hov
     square.classList.toggle("hover");
 }
 
-function randomRgb() {
-    const r = Math.round(Math.random() * 255);
-    const g = Math.round(Math.random() * 255);
-    const b = Math.round(Math.random() * 255);
-    return `rgb(${r}, ${g}, ${b})`;
+function randomRgba(elem) {
+    const regEx = /\d+(\.\d*)*/g; // matches rgba values
+    let alpha = getComputedStyle(elem).getPropertyValue("background-color"); // get bgc string
+    alpha = alpha.match(regEx)[3] || 1; // if current bgc has no rgba value, assume alpha = 1
+
+    if (alpha <= 0) { // check for invisible bg
+        return `rgba(0, 0, 0, 0)`;
+    } else { // assign randomized color with decreasing alpha value
+        const r = Math.round(Math.random() * 255);
+        const g = Math.round(Math.random() * 255);
+        const b = Math.round(Math.random() * 255);
+        const a = alpha - 0.1;
+        return `rgba(${r}, ${g}, ${b}, ${a})`;
+    }
 }
 
 createGrid();
