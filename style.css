@@ -1,0 +1,33 @@
+html {
+    box-sizing: border-box;
+}
+
+*, *:before, *:after {
+    margin: 0;
+    padding: 0;
+    box-sizing: inherit;
+}
+
+#squareContainer {
+    display: flex;
+    flex-flow: row wrap;
+
+    width: 640px;
+    aspect-ratio: 1 / 1;
+
+    background-color: #9f9ea1;
+}
+
+.square {
+    flex: 1 1 calc(1/16 * 100%);
+
+    background-color: black;
+}
+
+.hover {
+    background-color: white;
+}
+
+button#gridSizeBtn {
+    margin: 1em;
+}
