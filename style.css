@@ -19,8 +19,8 @@ html {
 }
 
 .square {
-    flex: 1 1 calc(1/16 * 100%);
-
+    flex-shrink: 1;
+    flex-grow: 1;
     background-color: black;
 }
 

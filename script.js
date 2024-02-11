@@ -11,8 +11,8 @@ function createGrid(size = 16) { // create a new square grid
     }
     else {
         if (squareArray.length > 0) { // remove old squares from DOM
-            for (const square in squareArray) {
-                square.remove();
+            for (let index = 0; index < squareArray.length; index++) {
+                squareArray[index].remove();
             }
         }
 
@@ -20,13 +20,16 @@ function createGrid(size = 16) { // create a new square grid
             const newDiv = document.createElement("div");
             squareArray.push(newDiv);
 
-            newDiv.classList.add("square");
-            newDiv.addEventListener("mouseover", (e) => {
-                activateSquare(e.target, true);
-            })
-            newDiv.addEventListener("mouseout", (e) => {
-                activateSquare(e.target, false);
-            })
+            newDiv.style.flexBasis = (1 / size * 100) + "%"; // calculate flex base percentage
+            newDiv.classList.add("square"); // add rest of styling 
+
+            newDiv.addEventListener("mouseenter", (e) => {
+                activateSquare(e.target);
+            }, false);
+            newDiv.addEventListener("mouseleave", (e) => {
+                activateSquare(e.target);
+            }, false);
+
             document.querySelector("#squareContainer").appendChild(newDiv);
         }
     }
@@ -38,13 +41,8 @@ function changeSize(previousInput = null) { // change grid based on user input
     createGrid(newSize);
 }
 
-function activateSquare(square, active = false) { // toggle between adding and removing the "hover" css class
-    if (active) {
-        square.classList.remove("hover");
-    }
-    else {
-        square.classList.add("hover");
-    }
+function activateSquare(square) { // toggle between adding and removing the "hover" css class
+    square.classList.toggle("hover");
 }
 
 createGrid();
