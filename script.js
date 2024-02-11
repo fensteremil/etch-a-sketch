@@ -25,9 +25,11 @@ function createGrid(size = 16) { // create a new square grid
 
             newDiv.addEventListener("mouseenter", (e) => {
                 activateSquare(e.target);
+                e.target.style.backgroundColor = randomRgb();
             }, false);
             newDiv.addEventListener("mouseleave", (e) => {
                 activateSquare(e.target);
+                e.target.style.backgroundColor = `black`;
             }, false);
 
             document.querySelector("#squareContainer").appendChild(newDiv);
@@ -43,6 +45,13 @@ function changeSize(previousInput = null) { // change grid based on user input
 
 function activateSquare(square) { // toggle between adding and removing the "hover" css class
     square.classList.toggle("hover");
+}
+
+function randomRgb() {
+    const r = Math.round(Math.random() * 255);
+    const g = Math.round(Math.random() * 255);
+    const b = Math.round(Math.random() * 255);
+    return `rgb(${r}, ${g}, ${b})`;
 }
 
 createGrid();
